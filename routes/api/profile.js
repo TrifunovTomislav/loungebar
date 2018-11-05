@@ -22,13 +22,15 @@ router.get(
   (req, res) => {
     const errors = {};
 
-    Profile.findOne({ user: req.user.id }).then(profile => {
-      if (!profile) {
-        errors.noprofile = "theres no profile for this user";
-        return res.status(404).json(errors);
-      }
-      res.json(profile);
-    });
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        if (!profile) {
+          errors.noprofile = "theres no profile for this user";
+          return res.status(404).json(errors);
+        }
+        res.json(profile);
+      })
+      .catch(err => res.status(404).json(err));
   }
 );
 
